@@ -1,122 +1,212 @@
 # Reconhecimento Facial com Python
 
-Esse é um projeto simples de reconhecimento facial feito em Python usando OpenCV.
+Projeto de reconhecimento facial feito em Python utilizando OpenCV.
 
-A ideia do projeto é permitir cadastrar uma pessoa pela webcam e depois reconhecer o rosto dela, mostrando o nome na tela.
+O sistema permite cadastrar pessoas pela webcam, reconhecer rostos cadastrados, registrar histórico de acessos e gerenciar usuários através de uma interface gráfica.
 
-O sistema tira algumas fotos do rosto durante o cadastro, treina um modelo com essas imagens e depois usa a webcam para comparar o rosto que está aparecendo com os rostos que já foram cadastrados.
+Também possui resposta por voz quando o acesso é liberado.
 
-## Tecnologias usadas
+## Funcionalidades
 
-* Python
-* OpenCV
-* NumPy
-* LBPH Face Recognizer
+- Cadastro facial pela webcam
+- Reconhecimento de pessoas cadastradas
+- Interface gráfica
+- Histórico de acessos
+- Data e hora dos acessos
+- Editar nome de usuários
+- Excluir usuários
+- Recadastrar rosto
+- Resposta por voz
+- Registro de acesso liberado
+- Banco de dados SQLite
 
-## Arquivos principais
+## Tecnologias utilizadas
 
-`cadastrar.py`
+- Python
+- OpenCV
+- OpenCV Contrib
+- NumPy
+- Tkinter
+- SQLite
 
-Usado para cadastrar uma nova pessoa. O programa pede o nome, abre a câmera e tira várias fotos do rosto.
+## Estrutura do projeto
 
-`reconhecer.py`
+```text
+Facial-com-Python/
+│
+├── main.py
+├── interface.py
+├── facial.py
+├── banco.py
+├── voz.py
+└── README.md
+```
 
-Abre a câmera e tenta reconhecer uma das pessoas que já foram cadastradas.
+## Arquivos
 
-## Como instalar
+### main.py
 
-Primeiro é necessário ter o Python instalado no computador.
+Arquivo principal do projeto.
 
-O projeto foi testado usando Python 3.13.
+É através dele que o sistema é iniciado.
 
-Depois de baixar ou clonar o projeto, abra a pasta no VS Code e abra o terminal.
+### interface.py
+
+Responsável pela interface gráfica do programa.
+
+Nele estão as telas de início, cadastro, reconhecimento, usuários e histórico.
+
+### facial.py
+
+Responsável pelo reconhecimento facial.
+
+Nesse arquivo estão as funções de abrir a webcam, detectar rostos, tirar fotos, treinar o modelo e reconhecer pessoas cadastradas.
+
+### banco.py
+
+Responsável pelo banco de dados SQLite.
+
+Guarda informações como usuários cadastrados, nome, data do cadastro e histórico de acessos.
+
+### voz.py
+
+Responsável pela resposta de voz do sistema.
+
+Quando uma pessoa é reconhecida, o Windows pode falar:
+
+```text
+Olá Eduardo. Acesso liberado.
+```
+
+## Requisitos
+
+É necessário ter o Python instalado.
+
+O projeto foi desenvolvido utilizando Python 3.13.
+
+Para verificar a versão:
+
+```bash
+python --version
+```
+
+## Instalação
+
+Clone o repositório:
+
+```bash
+git clone https://github.com/eduardomachadoferla/Facial-com-Python.git
+```
+
+Entre na pasta:
+
+```bash
+cd Facial-com-Python
+```
 
 Instale as bibliotecas necessárias:
 
 ```bash
-python -m pip install opencv-contrib-python==4.14.0.94
+python -m pip install opencv-contrib-python==4.14.0.94 numpy
 ```
 
-E também:
-
-```bash
-python -m pip install numpy
-```
-
-Para verificar se o OpenCV foi instalado corretamente:
-
-```bash
-python -c "import cv2; print(cv2.__version__)"
-```
-
-## Como cadastrar uma pessoa
+## Como executar
 
 Execute:
 
 ```bash
-python cadastrar.py
+python main.py
 ```
 
-O programa vai pedir o nome da pessoa:
+A interface do sistema será aberta.
+
+## Cadastrar uma pessoa
+
+Na interface clique em:
 
 ```text
-Digite o nome da pessoa que será cadastrada:
+Cadastrar
 ```
 
-Digite o nome e pressione Enter.
+Digite o nome da pessoa.
 
-Exemplo:
-
-```text
-Eduardo
-```
-
-A câmera será aberta.
+A webcam será aberta e o sistema irá tirar várias fotos automaticamente.
 
 Durante o cadastro:
 
-* olhe para a câmera;
-* movimente um pouco o rosto;
-* vire levemente para a esquerda e para a direita;
-* aproxime e afaste um pouco o rosto.
+- olhe para a câmera
+- movimente um pouco o rosto
+- vire levemente para os lados
+- aproxime e afaste o rosto
 
-O sistema vai tirar 40 fotos automaticamente.
+Depois das fotos serem capturadas, o sistema treina novamente o modelo de reconhecimento.
 
-Quando terminar, o modelo de reconhecimento será treinado.
+## Reconhecimento
 
-## Como reconhecer uma pessoa
+Clique em:
 
-Depois de cadastrar pelo menos uma pessoa, execute:
-
-```bash
-python reconhecer.py
+```text
+Reconhecer
 ```
 
 A webcam será aberta.
 
-Se o rosto for reconhecido, aparecerá o nome da pessoa na tela.
+Se o rosto estiver cadastrado, o sistema irá mostrar o nome da pessoa.
 
 Exemplo:
 
 ```text
-Ola, Eduardo!
+OLA EDUARDO!
 ```
 
-Se o sistema não reconhecer o rosto, aparecerá:
+Além disso, o computador poderá falar:
 
 ```text
-ROSTO NAO CADASTRADO
+Olá Eduardo. Acesso liberado.
 ```
 
-Para fechar a câmera, pressione:
+Para fechar a câmera pressione:
 
 ```text
 Q
 ```
 
-## Onde ficam os cadastros
+## Usuários
 
-Os arquivos do reconhecimento ficam salvos em:
+Na tela de usuários é possível visualizar as pessoas cadastradas.
+
+Também é possível:
+
+- editar o nome
+- excluir uma pessoa
+- recadastrar o rosto
+
+Ao excluir uma pessoa, as imagens utilizadas no reconhecimento também são removidas.
+
+## Histórico de acessos
+
+Cada reconhecimento confirmado é registrado no banco de dados.
+
+O histórico mostra:
+
+```text
+Pessoa
+Status
+Data
+Hora
+```
+
+Exemplo:
+
+```text
+Eduardo | Liberado | 19/09/2026 20:30:15
+```
+
+O histórico também pode ser apagado pela interface.
+
+## Onde os dados são armazenados
+
+Os dados ficam armazenados localmente no computador em:
 
 ```text
 C:\Users\Public\reconhecimento_facial
@@ -125,57 +215,73 @@ C:\Users\Public\reconhecimento_facial
 A estrutura fica parecida com:
 
 ```text
-reconhecimento_facial
+reconhecimento_facial/
 │
-├── nomes.json
-├── modelo_lbph.yml
+├── sistema.db
+├── modelo.yml
 ├── haarcascade_frontalface_default.xml
 │
-└── rostos
-    ├── 1
+└── rostos/
+    ├── 1/
     │   ├── 1.jpg
     │   ├── 2.jpg
     │   └── ...
     │
-    └── 2
+    └── 2/
         ├── 1.jpg
         ├── 2.jpg
         └── ...
 ```
 
-O arquivo `nomes.json` guarda os nomes cadastrados.
+## Banco de dados
 
-A pasta `rostos` guarda as imagens usadas para treinar o reconhecimento.
+O projeto utiliza SQLite.
 
-O arquivo `modelo_lbph.yml` guarda o modelo treinado.
+O arquivo:
 
-## Cadastrar mais pessoas
-
-É só executar novamente:
-
-```bash
-python cadastrar.py
+```text
+sistema.db
 ```
 
-Digitar outro nome e fazer o cadastro normalmente.
+armazena os usuários e o histórico de acessos.
 
-Depois disso o modelo é treinado novamente usando todas as pessoas cadastradas.
+## Privacidade
+
+As imagens dos rostos não devem ser enviadas para o GitHub.
+
+É recomendado adicionar ao `.gitignore`:
+
+```gitignore
+__pycache__/
+*.pyc
+*.db
+*.yml
+rostos/
+```
+
+Assim os dados das pessoas cadastradas continuam apenas no computador onde o programa está sendo executado.
 
 ## Observação
 
-Esse projeto foi feito para estudo e aprendizado de Python e visão computacional.
+Esse projeto foi criado para estudo de Python, visão computacional, reconhecimento facial, banco de dados e interface gráfica.
 
-O reconhecimento ainda é simples e não deve ser usado como sistema de segurança real, porque por enquanto não existe uma verificação avançada de prova de vida.
+O sistema não deve ser usado como único método de segurança em situações reais.
 
-Algumas melhorias que pretendo adicionar futuramente são:
+O reconhecimento atual ainda pode ser melhorado com técnicas como prova de vida.
 
-* detectar piscada;
-* criar uma interface gráfica;
-* salvar histórico de acessos;
-* cadastrar usuários pela própria interface;
-* criar níveis de acesso;
-* transformar o projeto em um aplicativo para Windows.
+## Melhorias futuras
+
+- detecção de piscada
+- prova de vida
+- tela de login
+- níveis de acesso
+- foto de tentativas de acesso negadas
+- exportar histórico
+- modo escuro
+- transformar em executável `.exe`
+- criar instalador para Windows
+- melhorar o reconhecimento facial
 
 ## Autor
 
-Eduardo
+Eduardo Machado Ferla
